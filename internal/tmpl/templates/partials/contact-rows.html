@@ -1,0 +1,22 @@
+{{range .}}
+<tr id="contact-{{.ID}}">
+    <td>{{.FirstName}} {{.LastName}}</td>
+    <td>{{.Email}}</td>
+    <td>{{.Phone}}</td>
+    <td class="actions-col">
+        <a href="/contacts/{{.ID}}/edit" class="btn btn-sm">Edit</a>
+        <button
+            class="btn btn-sm btn-danger"
+            hx-delete="/contacts/{{.ID}}"
+            hx-target="#contact-{{.ID}}"
+            hx-swap="outerHTML swap:200ms"
+            hx-confirm="Delete {{.FirstName}} {{.LastName}}?"
+        >Delete</button>
+    </td>
+</tr>
+{{end}}
+{{if not .}}
+<tr class="empty-row">
+    <td colspan="4">No contacts found.</td>
+</tr>
+{{end}}

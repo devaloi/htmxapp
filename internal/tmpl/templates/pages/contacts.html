@@ -1,0 +1,60 @@
+{{define "content"}}
+<div class="contacts-page">
+    <div class="page-header">
+        <h1>Contacts <span class="count" id="contact-count">({{.Count}})</span></h1>
+        <a href="/contacts/new" class="btn">New Contact</a>
+    </div>
+
+    <input
+        type="search"
+        name="q"
+        placeholder="Search contacts…"
+        class="search-input"
+        hx-get="/contacts/search"
+        hx-trigger="input changed delay:300ms, search"
+        hx-target="#contact-rows"
+        hx-indicator="#search-spinner"
+        value="{{.Search}}"
+    >
+    <span id="search-spinner" class="htmx-indicator">Searching…</span>
+
+    <table class="contact-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th class="actions-col">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="contact-rows">
+            {{range .Contacts}}
+            {{template "contact-row" .}}
+            {{end}}
+            {{if not .Contacts}}
+            <tr class="empty-row">
+                <td colspan="4">No contacts found.</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+</div>
+{{end}}
+
+{{define "contact-row"}}
+<tr id="contact-{{.ID}}">
+    <td>{{.FirstName}} {{.LastName}}</td>
+    <td>{{.Email}}</td>
+    <td>{{.Phone}}</td>
+    <td class="actions-col">
+        <a href="/contacts/{{.ID}}/edit" class="btn btn-sm">Edit</a>
+        <button
+            class="btn btn-sm btn-danger"
+            hx-delete="/contacts/{{.ID}}"
+            hx-target="#contact-{{.ID}}"
+            hx-swap="outerHTML swap:200ms"
+            hx-confirm="Delete {{.FirstName}} {{.LastName}}?"
+        >Delete</button>
+    </td>
+</tr>
+{{end}}

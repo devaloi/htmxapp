@@ -1,0 +1,45 @@
+{{define "content"}}
+<div class="form-page">
+    <h1>{{if .Contact.ID}}Edit Contact{{else}}New Contact{{end}}</h1>
+
+    <form
+        {{if .Contact.ID}}
+            method="POST" action="/contacts/{{.Contact.ID}}"
+        {{else}}
+            method="POST" action="/contacts"
+        {{end}}
+    >
+        {{if .Contact.ID}}
+        <input type="hidden" name="_method" value="PUT">
+        {{end}}
+
+        <div class="form-group {{if .Errors.FirstName}}has-error{{end}}">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="first_name" value="{{.Contact.FirstName}}" required>
+            {{if .Errors.FirstName}}<span class="error">{{.Errors.FirstName}}</span>{{end}}
+        </div>
+
+        <div class="form-group {{if .Errors.LastName}}has-error{{end}}">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last_name" value="{{.Contact.LastName}}" required>
+            {{if .Errors.LastName}}<span class="error">{{.Errors.LastName}}</span>{{end}}
+        </div>
+
+        <div class="form-group {{if .Errors.Email}}has-error{{end}}">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{{.Contact.Email}}" required>
+            {{if .Errors.Email}}<span class="error">{{.Errors.Email}}</span>{{end}}
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" value="{{.Contact.Phone}}">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn">{{if .Contact.ID}}Update{{else}}Create{{end}}</button>
+            <a href="/contacts" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{{end}}
