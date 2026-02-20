@@ -1,3 +1,5 @@
+[![CI](https://github.com/devaloi/htmxapp/actions/workflows/ci.yml/badge.svg)](https://github.com/devaloi/htmxapp/actions/workflows/ci.yml)
+
 # htmxapp
 
 A server-rendered contact manager built with Go and [htmx](https://htmx.org). No JavaScript frameworks — just HTML templates, htmx attributes, and a Go HTTP server.
